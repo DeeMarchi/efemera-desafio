@@ -1,0 +1,15 @@
+<section id="usuarios-newsletter" class="px-4 my-4">
+  <h2 class="text-center">Lista de inscritos</h2>
+  <% if (inscritosNewsletter.length > 0) {%>
+    <ul class="list-group px-5">
+      <% inscritosNewsletter.forEach(inscrito => { %>
+        <li class="list-group-item my-1"> 
+          <p>Email: <%= inscrito.email %></p>
+          <p>Data inscrição: <%= inscrito.dataInscricao %></p>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <h3>Nenhum inscrito em nosso newsletter</h3>
+  <% } %>
+</section>

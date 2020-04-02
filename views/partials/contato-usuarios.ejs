@@ -1,0 +1,16 @@
+<section id="usuarios-contato" class="px-4 my-4">
+  <h2 class="text-center">Lista de contatos</h2>
+  <% if (contatosUsuarios.length > 0) {%>
+    <ul class="list-group px-5">
+      <% contatosUsuarios.forEach(usuario => { %>
+        <li class="list-group-item my-1"> 
+          <p>Nome usuário: <%= usuario.nome %></p>
+          <p>Email: <%= usuario.email %></p>
+          <p>Mensagem: <%= usuario.mensagem %></p>
+        </li>
+      <% }); %>
+    </ul>
+  <% } else { %>
+    <h3>Nenhum contato em nosso sistema</h3>
+  <% } %>
+</section>
