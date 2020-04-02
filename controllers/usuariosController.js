@@ -33,7 +33,7 @@ const usuariosController = {
 
       let dadosArquivo = lerInfo('db', 'usuarios.json');
 
-      dadosArquivo.push(infoUsuario)
+      dadosArquivo.push(infoUsuario);
       
 
       dadosArquivo = JSON.stringify(dadosArquivo)
@@ -45,8 +45,22 @@ const usuariosController = {
    },
 
    loginForm: (req, res)=> {
-       res.render('login', {title: "Login"});
+               
+        res.render('login', {title: "Login"});
    },
+
+   logarUsuario: (req, res) => {
+       let {email, senha} = req.body;
+       let usuariosSalvos = lerInfo('db', 'usuarios.json');
+       usuariosSalvos.forEach(usuario => {
+           if(email != usuario.email) {
+               return res.send("Usuario Invalido");
+           } if(!bcrypt.compareSync(usuario.senha, senha)) {
+               return res.send("Senha Invalida");
+           }
+           return res.send("Deu Certo");
+       });
+   }
 
 };
 
