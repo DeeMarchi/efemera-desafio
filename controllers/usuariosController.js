@@ -32,14 +32,15 @@ const usuariosController = {
       let infoUsuario = { nome, email, senha };
 
       console.log(infoUsuario);
+      console.log(nome);
 
       let dadosArquivo = lerInfo('db', 'usuarios.json');
 
       dadosArquivo.push(infoUsuario)
-      console.log(dadosArquivo);
+      
 
       dadosArquivo = JSON.stringify(dadosArquivo)
-
+      console.log(dadosArquivo);
       fs.writeFileSync(usuarioJSON, dadosArquivo)
 
       res.send('usuario cadastrado com sucesso');
