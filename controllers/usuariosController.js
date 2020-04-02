@@ -3,7 +3,7 @@ const usuariosController = {
        res.render('registroUsuarios');
    },
    loginForm: (req, res)=> {
-       res.render('login');
+       res.render('login', {title: "Login"});
    },
 };
 
