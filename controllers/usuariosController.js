@@ -1,6 +1,5 @@
 const path = require('path');
 const bcrypt = require('bcrypt');
-const multer = require('multer');
 const fs = require('fs');
 
 let usuarioJSON = path.join('db', 'usuarios.json');
@@ -29,13 +28,8 @@ const usuariosController = {
 
    salvarForm: (req, res) => {
       let { nome, email, senha} = req.body;
-      let infoUsuario = { nome, email, senha };
+      let infoUsuario = { nome, email, senha: bcrypt.hashSync(senha, 10) };
 
-      console.log(infoUsuario);
-      console.log(nome);
-
-      console.log(req.body);
-      
 
       let dadosArquivo = lerInfo('db', 'usuarios.json');
 
