@@ -34,6 +34,9 @@ const usuariosController = {
       console.log(infoUsuario);
       console.log(nome);
 
+      console.log(req.body);
+      
+
       let dadosArquivo = lerInfo('db', 'usuarios.json');
 
       dadosArquivo.push(infoUsuario)
