@@ -3,11 +3,11 @@ const bcrypt = require('bcrypt');
 const multer = require('multer');
 const fs = require('fs');
 
-let usuarioJSONPath = path.join('db', 'usuarios.json');
+let usuarioJSON = path.join('db', 'usuarios.json');
 
 const lerInfo = (nomePasta, nomeArquivo) => {
     let dadosArquivo = [];
-    const codificacao = 'utf-8';
+    let codificacao = 'utf-8';
   
     let pathArquivo = path.join(nomePasta, nomeArquivo);
   
@@ -28,13 +28,21 @@ const usuariosController = {
    },
 
    salvarForm: (req, res) => {
-       let { nome, email, senha} = req.body;
+      let { nome, email, senha} = req.body;
+      let infoUsuario = { nome, email, senha };
 
-        let infoUsuario = { nome, email, senha };
+      console.log(infoUsuario);
 
-        
+      let dadosArquivo = lerInfo('db', 'usuarios.json');
 
+      dadosArquivo.push(infoUsuario)
+      console.log(dadosArquivo);
 
+      dadosArquivo = JSON.stringify(dadosArquivo)
+
+      fs.writeFileSync(usuarioJSON, dadosArquivo)
+
+      res.send('usuario cadastrado com sucesso');
 
    },
 
