@@ -19,9 +19,6 @@ const lerInfo = (nomePasta, nomeArquivo) => {
     return dadosArquivo;
 };
 
-const inscritosNewsletter = lerInfo('db', 'newsletter.json');
-const contatosUsuarios = lerInfo('db', 'contatos.json');
-
 const usuariosController = {
    registroForm: (req, res) => {
        res.render('registroUsuarios', {title: "Registro"});
@@ -36,8 +33,6 @@ const usuariosController = {
       dadosArquivo.push(infoUsuario);
 
       dadosArquivo = JSON.stringify(dadosArquivo)
-      console.log(dadosArquivo);
-
       fs.writeFileSync(usuarioJSON, dadosArquivo)
 
       res.send('usuario cadastrado com sucesso');
@@ -45,7 +40,6 @@ const usuariosController = {
    },
 
    loginForm: (req, res)=> {
-               
         res.render('login', {title: "Login"});
    },
 
@@ -53,25 +47,20 @@ const usuariosController = {
        let {email, senha} = req.body;
        let usuarioSalvo = lerInfo('db', 'usuarios.json');
 
-       let usuario = usuarioSalvo.filter((usuario, index)=> {
-            return usuario.email == email;
+       let usuario = usuarioSalvo.filter(usuario => {
+            return usuario.email === email;
        });
 
        if (usuario.length < 0){
            return res.send('Inválido');
        }
-       console.log(usuario);
-        // preciso arrumar isso. ele ta trabalhando com um usuario so. 
-
        if(!bcrypt.compareSync(senha, usuario[0].senha)){
            return res.redirect("Login");
-
        }
        
        req.session.usuario = usuario[0];
 
        res.redirect('/admin');
-        
 }};
 
 module.exports = usuariosController;
