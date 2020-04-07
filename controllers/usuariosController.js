@@ -16,10 +16,8 @@ const lerInfo = (nomePasta, nomeArquivo) => {
     } else {
       console.log(`[Atenção] arquivo ${pathArquivo} não foi encontrado`);
     }
-  
     return dadosArquivo;
 };
-
 
 const usuariosController = {
    registroForm: (req, res) => {
@@ -30,14 +28,13 @@ const usuariosController = {
       let { nome, email, senha} = req.body;
       let infoUsuario = { nome, email, senha: bcrypt.hashSync(senha, 10) };
 
-
       let dadosArquivo = lerInfo('db', 'usuarios.json');
 
       dadosArquivo.push(infoUsuario);
-      
 
       dadosArquivo = JSON.stringify(dadosArquivo)
       console.log(dadosArquivo);
+
       fs.writeFileSync(usuarioJSON, dadosArquivo)
 
       res.send('usuario cadastrado com sucesso');
@@ -52,6 +49,10 @@ const usuariosController = {
    logarUsuario: (req, res) => {
        let {email, senha} = req.body;
        let usuariosSalvos = lerInfo('db', 'usuarios.json');
+
+       console.log(email, senha);
+       console.log(usuariosSalvos);
+
        usuariosSalvos.forEach(usuario => {
            if(email != usuario.email) {
                return res.send("Usuario Invalido");
