@@ -48,27 +48,28 @@ const usuariosController = {
 
    logarUsuario: (req, res) => {
        let {email, senha} = req.body;
-       let usuariosSalvos = lerInfo('db', 'usuarios.json');
+       let usuarioSalvo = lerInfo('db', 'usuarios.json');
 
-       console.log(email, senha);
-       console.log(usuariosSalvos);
+       usuarioSalvo = usuarioSalvo[0]  
+       console.log(usuarioSalvo)
 
-       usuariosSalvos.forEach((usuario, i) => {
-           if(email != usuario.email) {
-               return res.send("Usuario Invalido");
-           } if(!bcrypt.compareSync(senha, usuario.senha)) {
-               return res.send("Senha Invalida");
-           }
-       });
-       usuario = usuariosSalvos.find(usuario => usuario.email === email
-                            && !bcrypt.compareSync(senha, usuario.senha));
+        // preciso arrumar isso. ele ta trabalhando com um usuario so. 
 
-        console.log(usuario);
-       req.session.usuario = usuario;
+        if(email != usuarioSalvo.email){
+            return res.send('Usuario inválido');
+        }
+        if(!bcrypt.compareSync(senha, usuarioSalvo.senha)){
+            return res.send('senha errada');
+        }
+        console.log('to aqui')
 
-       return res.send("Deu Certo");
-   }
+        req.session.usuario = usuarioSalvo
 
-};
+        // if(logado != undefined){
+        //     res.cookie('logado', usuarioSalvo.email, {maxAge: 600000})
+        // }
+        return res.send("Deu Certo");
+        
+}};
 
 module.exports = usuariosController;
