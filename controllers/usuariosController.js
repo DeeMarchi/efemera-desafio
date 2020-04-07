@@ -50,25 +50,24 @@ const usuariosController = {
        let {email, senha} = req.body;
        let usuarioSalvo = lerInfo('db', 'usuarios.json');
 
-       usuarioSalvo = usuarioSalvo[0]  
-       console.log(usuarioSalvo)
+       let usuario = usuarioSalvo.filter((usuario, index)=> {
+            return usuario.email == email;
+       });
 
+       if (usuario.length < 0){
+           return res.send('Inválido');
+       }
+       console.log(usuario);
         // preciso arrumar isso. ele ta trabalhando com um usuario so. 
 
-        if(email != usuarioSalvo.email){
-            return res.send('Usuario inválido');
-        }
-        if(!bcrypt.compareSync(senha, usuarioSalvo.senha)){
-            return res.send('senha errada');
-        }
-        console.log('to aqui')
+       if(!bcrypt.compareSync(senha, usuario[0].senha)){
+           return res.send('senha Inválida');
 
-        req.session.usuario = usuarioSalvo
+       }
+       
+       req.session.usuario = usuario[0];
 
-        // if(logado != undefined){
-        //     res.cookie('logado', usuarioSalvo.email, {maxAge: 600000})
-        // }
-        return res.send("Deu Certo");
+       res.render('painel-admin', { title: 'Painel Administrativo', inscritosNewsletter, contatosUsuarios });
         
 }};
 

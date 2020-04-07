@@ -8,12 +8,19 @@ const indexRouter = require('./routes/index');
 const usersRouter = require('./routes/users');
 const adminRouter = require('./routes/admin');
 const usuariosRouter = require('./routes/usuarios');
+const session = require('express-session');
 
 const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 app.set('view engine', 'ejs');
+
+app.use(session({
+  secret: "projeto express",
+  resave: true,
+  saveUninitialized: true, 
+}));
 
 app.use(logger('dev'));
 app.use(express.json());
