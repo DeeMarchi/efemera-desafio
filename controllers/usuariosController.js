@@ -19,6 +19,9 @@ const lerInfo = (nomePasta, nomeArquivo) => {
     return dadosArquivo;
 };
 
+const inscritosNewsletter = lerInfo('db', 'newsletter.json');
+const contatosUsuarios = lerInfo('db', 'contatos.json');
+
 const usuariosController = {
    registroForm: (req, res) => {
        res.render('registroUsuarios', {title: "Registro"});
@@ -61,13 +64,13 @@ const usuariosController = {
         // preciso arrumar isso. ele ta trabalhando com um usuario so. 
 
        if(!bcrypt.compareSync(senha, usuario[0].senha)){
-           return res.send('senha Inválida');
+           return res.redirect("Login");
 
        }
        
        req.session.usuario = usuario[0];
 
-       res.render('painel-admin', { title: 'Painel Administrativo', inscritosNewsletter, contatosUsuarios });
+       res.redirect('/admin');
         
 }};
 
