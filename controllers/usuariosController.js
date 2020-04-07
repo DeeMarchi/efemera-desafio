@@ -53,14 +53,20 @@ const usuariosController = {
        console.log(email, senha);
        console.log(usuariosSalvos);
 
-       usuariosSalvos.forEach(usuario => {
+       usuariosSalvos.forEach((usuario, i) => {
            if(email != usuario.email) {
                return res.send("Usuario Invalido");
-           } if(!bcrypt.compareSync(usuario.senha, senha)) {
+           } if(!bcrypt.compareSync(senha, usuario.senha)) {
                return res.send("Senha Invalida");
            }
-           return res.send("Deu Certo");
        });
+       usuario = usuariosSalvos.find(usuario => usuario.email === email
+                            && !bcrypt.compareSync(senha, usuario.senha));
+
+        console.log(usuario);
+       req.session.usuario = usuario;
+
+       return res.send("Deu Certo");
    }
 
 };
